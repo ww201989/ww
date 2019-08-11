@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<properties resource="db.properties"/>
+	
+	<settings>
+	<!-- 开启日志，并指定使用的具体日志 -->
+		<setting name="logImpl" value="LOG4J"/>
+	</settings>
+	
+	<!-- 设置单个/多个别名 -->
+	<typeAliases>
+		<!-- 设置单个别名 （可以忽略大小写）-->
+		<!-- <typeAlias type="org.entity.Student" alias="student"/> -->
+		<!-- 批量定义别名 -->
+		<package name="org.entity"/>
+		
+	</typeAliases>
+	
+	<typeHandlers>
+		<typeHandler handler="org.converter.BooleanAndIntConverter" javaType="Boolean" jdbcType="INTEGER"/>
+	</typeHandlers>
+
+	<!-- 通过environments的default值指定MyBatis运行时的数据库环境 -->
+	<environments default="development">
+	<!-- 开发环境 -->
+		<environment id="development">
+			<transactionManager type="JDBC"/>
+				<dataSource type="POOLED">
+					<!-- 配置数据库信息 -->
+					<property name="driver" value="${driver}"/>
+					<property name="url" value="${url}"/>
+					<property name="username" value="${username}"/>
+					<property name="password" value="${password}"/>
+				</dataSource>
+		</environment>
+		
+		<!-- 真正的项目应该在发布的那台计算机上运行 -->
+		<environment id="shishi">
+			<transactionManager type="JDBC"/>
+				<dataSource type="POOLED">
+					<!-- 配置数据库信息 -->
+					<property name="driver" value="com.mysql.jdbc.Driver"/>
+					<property name="url" value="jdbc:mysql://localhost:3306/test"/>
+					<property name="username" value="root"/>
+					<property name="password" value="123"/>
+				</dataSource>
+		</environment>
+		
+		
+		<!--  -->
+		<environment id="test">
+			<transactionManager type="JDBC"/>
+				<dataSource type="POOLED">
+					<!-- 配置数据库信息 -->
+					<property name="driver" value="com.mysql.jdbc.Driver"/>
+					<property name="url" value="jdbc:mysql://localhost:3306/test"/>
+					<property name="username" value="root"/>
+					<property name="password" value="123"/>
+				</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="org/mapper/studentMapper.xml"/>
+	</mappers>
+</configuration>
